@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catch The Teacher</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            background: #e8f4ff;
+        }
+        #teacher {
+            font-size: 70px;
+            position: absolute;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 30px;
+            margin-top: 20px;
+        }
+        #message {
+            font-size: 22px;
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Catch The Teacher 👨‍🏫</h1>
+<div id="score">Score: 0</div>
+<div id="message"></div>
+
+<div id="teacher">👨‍🏫</div>
+
+<script>
+    let score = 0;
+    let teacher = document.getElementById("teacher");
+    let message = document.getElementById("message");
+    let scoreBox = document.getElementById("score");
+
+    const funnyLines = [
+        "Too slow! Teacher escaped!",
+        "Teacher is faster than your GPA!",
+        "Missed! No attendance for you!",
+        "Try again, student!",
+        "Teacher used teleportation!"
+    ];
+
+    function moveTeacher() {
+        let x = Math.random() * (window.innerWidth - 100);
+        let y = Math.random() * (window.innerHeight - 100);
+        teacher.style.left = x + "px";
+        teacher.style.top = y + "px";
+    }
+
+    teacher.onclick = function() {
+        score++;
+        scoreBox.innerHTML = "Score: " + score;
+        moveTeacher();
+    };
+
+    document.body.onclick = function(e) {
+        if (e.target.id !== "teacher") {
+            message.innerHTML = funnyLines[Math.floor(Math.random() * funnyLines.length)];
+        }
+    };
+
+    setInterval(moveTeacher, 800);
+</script>
+
+</body>
+</html>
