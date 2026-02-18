@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Catch The Teacher</title>
+    <title>Catch Tanaka Sensei</title>
     <style>
         body {
             text-align: center;
             font-family: Arial;
             background: #e8f4ff;
         }
+
+        /* Teacher image styling */
         #teacher {
-            font-size: 70px;
             position: absolute;
+            width: 150px;       
+            height: 150px;
             cursor: pointer;
+            object-fit: cover;
+            border-radius: 50%; /* Circle */
+            border: 5px solid white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+
+            /* Animation */
+            transition: transform 0.2s ease;
         }
+
+        #teacher:active {
+            transform: scale(1.15); /* Bounce effect */
+        }
+
         #score {
             font-size: 30px;
             margin-top: 20px;
         }
+
         #message {
             font-size: 22px;
             color: red;
@@ -26,17 +42,20 @@
 </head>
 <body>
 
-<h1>Catch TANAKA 先生 👨‍🏫</h1>
+<h1>Catch Tanaka 先生</h1>
 <div id="score">Score: 0</div>
 <div id="message"></div>
 
-<div id="teacher">👨‍🏫</div>
+<img id="teacher" src="c:\Users\kmd37\OneDrive\Desktop\LESSON\WEB\HTML\T1.jpg" alt="Tanaka Sensei">
+
+<audio id="catchSound" src="catch.mp3"></audio>
 
 <script>
     let score = 0;
     let teacher = document.getElementById("teacher");
     let message = document.getElementById("message");
     let scoreBox = document.getElementById("score");
+    let sound = document.getElementById("catchSound");
 
     const funnyLines = [
         "Too slow! Teacher escaped!",
@@ -47,8 +66,8 @@
     ];
 
     function moveTeacher() {
-        let x = Math.random() * (window.innerWidth - 100);
-        let y = Math.random() * (window.innerHeight - 100);
+        let x = Math.random() * (window.innerWidth - 200);
+        let y = Math.random() * (window.innerHeight - 200);
         teacher.style.left = x + "px";
         teacher.style.top = y + "px";
     }
@@ -56,6 +75,10 @@
     teacher.onclick = function() {
         score++;
         scoreBox.innerHTML = "Score: " + score;
+
+        sound.currentTime = 0;  // restart sound
+        sound.play();           // play sound
+
         moveTeacher();
     };
 
