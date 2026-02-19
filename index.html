@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Catch Tanaka Sensei</title>
+    <title>Catch TANAKA 先生</title>
     <style>
         body {
             text-align: center;
@@ -9,24 +9,29 @@
             background: #e8f4ff;
         }
 
+        
+        #hitbox {
+            position: absolute;
+            width: 150px;  
+            height: 150px;
+            transform: translate(-25px, -25px); 
+        }
+
         /* Teacher image styling */
         #teacher {
-            position: absolute;
-            width: 150px;       
+            width: 150px;
             height: 150px;
-            cursor: pointer;
             object-fit: contain;
             background-color: white;
-            border-radius: 50%; 
+            border-radius: 50%;
             border: 3px solid white;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
-
-            /* Animation */
+            touch-action: manipulation;
             transition: transform 0.2s ease;
         }
 
         #teacher:active {
-            transform: scale(1.15); /* Bounce effect */
+            transform: scale(1.15);
         }
 
         #score {
@@ -47,13 +52,16 @@
 <div id="score">Score: 0</div>
 <div id="message"></div>
 
-<img id="teacher" src="tanaka.jpg" alt="Tanaka Sensei">
+<div id="hitbox">
+    <img id="teacher" src="tanaka.jpg" alt="Tanaka Sensei">
+</div>
 
 <audio id="catchSound" src="catch.mp3"></audio>
 
 <script>
     let score = 0;
     let teacher = document.getElementById("teacher");
+    let hitbox = document.getElementById("hitbox");
     let message = document.getElementById("message");
     let scoreBox = document.getElementById("score");
     let sound = document.getElementById("catchSound");
@@ -69,22 +77,23 @@
     function moveTeacher() {
         let x = Math.random() * (window.innerWidth - 200);
         let y = Math.random() * (window.innerHeight - 200);
-        teacher.style.left = x + "px";
-        teacher.style.top = y + "px";
+        hitbox.style.left = x + "px";
+        hitbox.style.top = y + "px";
     }
 
-    teacher.onclick = function() {
+    function catchTeacher() {
         score++;
         scoreBox.innerHTML = "Score: " + score;
-
-        sound.currentTime = 0;  // restart sound
-        sound.play();           // play sound
-
+        sound.currentTime = 0;
+        sound.play();
         moveTeacher();
-    };
+    }
+
+    hitbox.addEventListener("click", catchTeacher);
+    hitbox.addEventListener("touchstart", catchTeacher);
 
     document.body.onclick = function(e) {
-        if (e.target.id !== "teacher") {
+        if (e.target.id !== "teacher" && e.target.id !== "hitbox") {
             message.innerHTML = funnyLines[Math.floor(Math.random() * funnyLines.length)];
         }
     };
