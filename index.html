@@ -95,11 +95,12 @@
 
     document.body.onclick = function(e) {
         if (e.target.id !== "teacher" && e.target.id !== "hitbox") {
-            message.innerHTML = funnyLines[Math.floor(Math.random() * funnyLines.length)];
+        message.innerHTML = funnyLines[Math.floor(Math.random() * funnyLines.length)];
+        moveTeacher(); 
         }
     };
 
-    setInterval(moveTeacher, 800);
+    setInterval(moveTeacher, 400);
 </script>
 
 </body>
